@@ -7,7 +7,7 @@ import 'package:pokemon_long_list/widgets/pokemon_list_item.dart';
 
 Future<PokemonListResponse> fetchPokemonList() async {
   final response = await http
-      .get(Uri.parse('https://pokeapi.co/api/v2/pokemon'));
+      .get(Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=10000&offset=0'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
@@ -42,7 +42,7 @@ class _PokemonListWidgetState extends State<PokemonListWidget> {
       future: futurePokemonList,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return PokemonListItem(pokemonList : snapshot.data!);
+          return PokemonListItem(pokemonList : snapshot.data!.results);
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');
         }
